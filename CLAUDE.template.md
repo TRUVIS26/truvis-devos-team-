@@ -65,4 +65,4 @@ To start the per-module development cycle, use `/develop-next-module`.
 
 ## Completed modules
 
-<!-- Docs-Sync appends shipped modules here. -->
+<!-- Tech Lead marks shipped modules here. Move anchors from "In-flight modules" to this section manually when a module's PR is merged. -->

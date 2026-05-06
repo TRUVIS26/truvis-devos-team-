@@ -47,6 +47,7 @@ export async function writeAuditLog(
       new_values: newValues == null ? Prisma.JsonNull : (newValues as Prisma.InputJsonValue),
       ip_address: ctx.ipAddress ?? null,
       request_id: ctx.requestId ?? null,
+      correlation_id: ctx.correlationId ?? null,
     },
   })
 }

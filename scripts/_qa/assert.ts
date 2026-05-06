@@ -5,7 +5,7 @@
  * (tsx) exits non-zero, making QA_BLOCKED automatic.
  */
 
-import { FORBIDDEN_FIELD_SET } from '@/lib/public/constants'
+import { FORBIDDEN_FIELD_SET } from '../../lib/public/constants'
 
 /** Assert that `condition` is true, otherwise throw with `message`. */
 export function assert(condition: boolean, message: string): asserts condition {

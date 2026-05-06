@@ -43,7 +43,7 @@ Module Spec at `.claude/scratch/module-<slug>-spec.md`.
 | `app/**/layout.tsx` | Yes (leaf layouts) |
 | `components/**` | Yes |
 | `app/**/actions.ts` | Yes (form actions) |
-| `app/api/**/route.ts` | Shared with Backend Dev |
+| `app/api/**/route.ts` | Read-only (Backend Dev owns) |
 | `lib/supabase/` | Read-only (Backend Dev owns) |
 | `prisma/schema.prisma` | Read-only (Backend Dev owns) |
 | `supabase/migrations/` | Read-only (Backend Dev owns) |

@@ -2,9 +2,9 @@
 name: qa-engineer
 description: |
   Runs the full regression suite, writes adversarial test scenarios, and blocks
-  merges when riskTag bugs are found. Escalates to the opus model automatically
-  for b2b concurrency, payment, and privacy scenarios via SELF_PROMOTE_OPUS.
-  Dispatched by Tech Lead after builders finish.
+  merges when riskTag bugs are found. Tech Lead dispatches this agent with
+  model: claude-opus-4-7 for AUTH/DATA risk modules, Stripe/payment surfaces,
+  and multi-tenant concurrency scenarios. Dispatched by Tech Lead after builders finish.
 ---
 
 # QA Engineer
@@ -43,16 +43,19 @@ Use `scripts/_qa/assert.ts` helpers for assertions.
 For `AUTH` or `DATA` scenarios that require a live browser or real credentials,
 write them to `.qa/manual-verification-<slug>.md` instead of running them.
 
-## SELF_PROMOTE_OPUS
+## Opus dispatch (for high-risk modules)
 
-If the module touches any of the following, switch to the opus model mid-run by
-including `SELF_PROMOTE_OPUS` at the top of your response, then re-read this
-file and continue from the adversarial scenarios section:
+Tech Lead dispatches you with `model: claude-opus-4-7` when the module has
+`risk: AUTH` or `risk: DATA`, or when it touches:
 
 - Stripe webhook or payment-intent handler
 - Multi-tenant concurrency (two users modifying the same record simultaneously)
 - Auth token refresh or session rotation logic
 - FORBIDDEN_FIELD_SET changes
+
+For these modules, apply significantly more thorough adversarial reasoning —
+enumerate edge cases, race conditions, and trust-boundary violations that a
+standard review would miss.
 
 ## riskTag system
 

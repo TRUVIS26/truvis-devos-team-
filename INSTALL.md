@@ -19,7 +19,7 @@ If your project deviates from this stack, the lib primitives and scripts may nee
 From a clone of `truvis25/truvis-devos-team-` and the target-project root:
 
 ```bash
-LEAM=/path/to/truvis-devos-team           # this repo
+TEAM=/path/to/truvis-devos-team-          # this repo (note trailing hyphen)
 TARGET=/path/to/your-project              # your project
 
 # Agents + slash command

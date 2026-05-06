@@ -1,6 +1,6 @@
 # Manual QA Backlog
 
-Aggregated by Docs-Sync from `.qa/manual-verification-<slug>.md` files. Each module appended once (idempotent — Docs-Sync reads the last 20 lines first to skip duplicates).
+Aggregated by Docs-Sync from `.qa/manual-verification-<slug>.md` files. Each module appended once (idempotent — Docs-Sync reads the last 30 lines first to skip duplicates).
 
 Format:
 

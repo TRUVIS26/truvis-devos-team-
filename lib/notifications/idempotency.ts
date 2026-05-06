@@ -20,6 +20,10 @@ export async function withIdempotency<T>(
   const now = new Date()
   const expiresAt = new Date(now.getTime() + ttlMs)
 
+  // Note: findUnique → create is not atomic. Under very high concurrency two
+  // callers can both see null and both proceed. For most notification workloads
+  // this window is acceptable; for stricter guarantees wrap in a DB-level unique
+  // constraint catch (P2002) or use SELECT … FOR UPDATE in a raw transaction.
   const existing = await prisma.idempotencyKey.findUnique({ where: { key } })
   if (existing) {
     if (existing.expiresAt > now) {
@@ -28,7 +32,13 @@ export async function withIdempotency<T>(
     await prisma.idempotencyKey.delete({ where: { key } })
   }
 
-  await prisma.idempotencyKey.create({ data: { key, expiresAt } })
+  try {
+    await prisma.idempotencyKey.create({ data: { key, expiresAt } })
+  } catch (e: unknown) {
+    // Another concurrent caller won the race — treat as already-processed.
+    if ((e as { code?: string }).code === 'P2002') return null
+    throw e
+  }
 
   try {
     return await fn()

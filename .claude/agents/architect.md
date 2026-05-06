@@ -34,7 +34,7 @@ a dedicated ADR file, not in your response.
 **Constraints for builders:**
 - <constraint 1>
 - <constraint 2>
-- ...
+- <additional constraints as needed>
 
 **ADR:** <ADR-NNNN — create file if the decision is novel, skip if covered>
 ```

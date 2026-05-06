@@ -35,7 +35,7 @@ export function toPublicExampleModel(model: ExampleModel): PublicExampleModel {
 
 // ---- Delete this file after you ship your first real toPublic<Model> ----
 
-function stripForbidden<T extends Record<string, unknown>>(obj: T): T {
+function stripForbidden(obj: Record<string, unknown>): Record<string, unknown> {
   const result = { ...obj }
   for (const key of Object.keys(result)) {
     if (FORBIDDEN_FIELD_SET.has(key)) {

@@ -36,6 +36,6 @@ No arguments needed. Tech Lead reads `PROJECT.md` to discover everything else.
 ```
 <agents>tech-lead</agents>
 
-Run the `/develop-next-module` 10-step sequence as described in your agent file.
+Run the `/develop-next-module` 12-step sequence as described in your agent file.
 Start with Phase-0: `npm run check:foundations`.
 ```

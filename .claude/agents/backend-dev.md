@@ -24,7 +24,7 @@ the Module Spec at `.claude/scratch/module-<slug>-spec.md`.
 ## Workflow
 
 1. **Read the Module Spec** — note DB changes, API surface, risk tag.
-2. **Run `npm run check:migration-safety`** before writing any migration.
+2. **Run `npm run lint:migrations`** before writing any migration.
    Address any flagged patterns before proceeding.
 3. **Schema first**: update `prisma/schema.prisma`, then generate migration:
    ```bash

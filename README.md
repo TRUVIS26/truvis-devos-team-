@@ -18,7 +18,10 @@ A multi-subagent development workflow extracted from a real Next.js + Prisma + S
 - `scripts/_qa/assert.ts` — QA test helpers
 - `docs/development-workflow.md` — workflow SOP
 - `docs/adr/INDEX.md` + ADR-0001 (legacy Nygard) + ADR-0002 (MADR v4 template)
-- Templates: `PROJECT.template.md`, `CLAUDE.template.md`, `AGENTS.template.md`, `package.template.json`
+- Templates: `PROJECT.template.md`, `CLAUDE.template.md`, `AGENTS.template.md`, `MANUAL_QA_BACKLOG.template.md`, `package.template.json`
+- `.env.example` — required env-var list with placeholder values
+- `docker/Dockerfile` + `docker/docker-compose.yml` — container setup for local dev
+- `scripts/healthcheck.sh` — container health probe
 
 ## Stack assumption
 
@@ -54,7 +57,7 @@ User: /develop-next-module
   │
   ▼
 [QA Engineer]  regression suite + adversarial scenarios + riskTag bug blocks
-  │             may SELF_PROMOTE_OPUS for b��2 concurrency / payment scenarios
+  │             may SELF_PROMOTE_OPUS for b��2 concurrency / payment scenarios
   │
   ▼
 [Docs-Sync]  CLAUDE.md + launch-checklist + external spec + PR description sync

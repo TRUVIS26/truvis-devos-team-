@@ -27,7 +27,7 @@ using the TRUVIS DevOs Team multi-subagent workflow.
 
 ---
 
-## Per-module cycle (the 10-step sequence)
+## Per-module cycle (the 12-step sequence)
 
 ```
 1. Phase-0 gate         npm run check:foundations
@@ -39,9 +39,12 @@ using the TRUVIS DevOs Team multi-subagent workflow.
    └─ if triggers fire → dispatch Architect
 7. Branch + draft PR    git checkout -b feat/<slug>
 8. Builders             FE | BE | FE+BE (parallel) per triage table
-9. QA pass              QA Engineer (regression + adversarial)
-10. Docs pass           Docs-Sync (CLAUDE.md + checklist + PR desc)
-11. Sign-off            PR # + manual gap list + risk:<tag>
+                        be-first | be-first-stub per PROJECT.md builderDefault
+9. Phase-0 re-check     npm run check:foundations (quick recheck after schema changes)
+10. QA pass             QA Engineer (regression + adversarial)
+                        model: opus when risk=AUTH|DATA or payment/multi-tenant
+11. Docs pass           Docs-Sync (CLAUDE.md + checklist + PR desc)
+12. Sign-off            PR # + manual gap list + risk:<tag>
 ```
 
 ---

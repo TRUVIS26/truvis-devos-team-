@@ -34,10 +34,10 @@ Classify the inbound signal and dispatch only the agents listed:
 | New API route with existing DB schema | Backend Dev → QA Engineer |
 | Cross-surface feature (UI + API) | Frontend Dev + Backend Dev (parallel) → QA Engineer → Docs-Sync |
 | Schema change (new table / column migration) | Architect (if triggers) → Backend Dev → Frontend Dev → QA Engineer → Docs-Sync |
-| Auth / privacy / payment surface | Architect (always) → Backend Dev → QA-Opus → Docs-Sync |
+| Auth / privacy / payment surface | Architect (always) → Backend Dev → QA Engineer (opus) → Docs-Sync |
 | New full module | Full team (this file's `/develop-next-module` flow) |
 
-## `/develop-next-module` — 10-step sequence
+## `/develop-next-module` — 12-step sequence
 
 1. **Run Phase-0 gate** — `npm run check:foundations`. Stop if it fails.
 2. **Read `PROJECT.md`** — locate `launchChecklistPath` and `launchChecklistOffsets`.
@@ -56,8 +56,10 @@ Classify the inbound signal and dispatch only the agents listed:
    - FE-only surface → Frontend Dev
    - BE-only surface → Backend Dev
    - Both → Frontend Dev + Backend Dev in parallel (two sub-agent calls, same spec)
-   - If `be-first` is set in PROJECT.md → Backend Dev first, stub types for Frontend Dev
+   - If `builderDefault: be-first` in PROJECT.md → Backend Dev first, then Frontend Dev with BE's types
+   - If `builderDefault: be-first-stub` in PROJECT.md → Backend Dev first (publishes stub types); Frontend Dev starts immediately consuming stubs and fills in real impl when BE finishes
 10. **QA pass** → dispatch QA Engineer with the Module Spec + branch diff.
+    - If the module risk tag is `AUTH` or `DATA`, or if the module touches Stripe/payments or multi-tenant concurrency, dispatch QA Engineer with `model: claude-opus-4-7` for deeper adversarial reasoning.
 11. **Docs pass** → dispatch Docs-Sync.
 12. **Sign-off**: report back to the user with:
     - PR number

@@ -25,6 +25,7 @@ const BASELINE_FOUNDATIONS: string[] = [
   'lib/notifications/idempotency.ts',
   'lib/validate/params.ts',
   'lib/public/constants.ts',
+  'lib/public/example.ts',
   'scripts/check-foundations.ts',
   'scripts/check-architect-triggers.ts',
   'scripts/check-migration-safety.ts',
