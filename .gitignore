@@ -1,0 +1,41 @@
+# Dependency directories
+node_modules/
+vendor/
+__pycache__/
+*.pyc
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Docker
+*.tar
+
+# Secrets & credentials (never commit these)
+*.env
+.env
+.env.*
+secrets/
+*.pem
+*.key
+*.p12
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Terraform state (if used)
+*.tfstate
+*.tfstate.*
+.terraform/

@@ -1,0 +1,10 @@
+services:
+  devops:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: truvis-devops:latest
+    container_name: truvis-devops
+    restart: unless-stopped
+    volumes:
+      - ../scripts:/app/scripts:ro
