@@ -1,0 +1,16 @@
+{
+  "//": "Merge these scripts into your project's package.json. Do NOT overwrite — your project will have many other scripts. Only the four below are strictly required by the team.",
+  "scripts": {
+    "check:foundations": "tsx scripts/check-foundations.ts",
+    "check:architect-triggers": "tsx scripts/check-architect-triggers.ts",
+    "check:env": "tsx scripts/check-env-readiness.ts",
+    "lint:migrations": "tsx scripts/check-migration-safety.ts",
+    "//test:privacy": "tsx scripts/check-public-api-privacy.ts",
+    "//test:audit-writers": "tsx scripts/check-audit-writers.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0",
+    "dotenv": "^16.4.0"
+  }
+}
