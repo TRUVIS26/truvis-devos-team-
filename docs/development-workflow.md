@@ -42,7 +42,8 @@ using the TRUVIS DevOs Team multi-subagent workflow.
                         be-first | be-first-stub per PROJECT.md builderDefault
 9. Phase-0 re-check     npm run check:foundations (quick recheck after schema changes)
 10. QA pass             QA Engineer (regression + adversarial)
-                        model: opus when risk=AUTH|DATA or payment/multi-tenant
+                        model: claude-opus-4-7 when risk=AUTH|DATA|PRIVACY or payment/multi-tenant
+                        → if QA_BLOCKED: re-dispatch builders → re-run QA (max 3 cycles)
 11. Docs pass           Docs-Sync (CLAUDE.md + checklist + PR desc)
 12. Sign-off            PR # + manual gap list + risk:<tag>
 ```
@@ -59,8 +60,8 @@ using the TRUVIS DevOs Team multi-subagent workflow.
 | New API route (existing schema) | Backend Dev → QA |
 | Cross-surface feature | FE + BE (parallel) → QA → Docs-Sync |
 | Schema change | Architect? → BE → FE → QA → Docs-Sync |
-| Auth / privacy / payment | Architect (always) → BE → QA-Opus → Docs-Sync |
-| New full module | Full team (10-step cycle above) |
+| Auth / privacy / payment | Architect (always) → BE → QA Engineer (opus) → Docs-Sync |
+| New full module | Full team (12-step cycle above) |
 
 ---
 
@@ -118,7 +119,7 @@ Every QA finding is tagged:
 ## Architect escalation
 
 Architect is invoked when `npm run check:architect-triggers` fires at least one
-trigger, or when the module's risk tag is AUTH or DATA.
+trigger, or when the module's risk tag is AUTH, DATA, or PRIVACY.
 
 Architect output: ≤500 words. Decisions go into `docs/adr/` using MADR v4 format.
 

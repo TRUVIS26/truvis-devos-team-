@@ -120,12 +120,17 @@ function getDiff(): { diff: string; files: string[] } {
       .filter(Boolean)
     return { diff, files }
   } catch {
-    const diff = execSync('git diff HEAD', { encoding: 'utf8' })
-    const files = execSync('git diff --name-only HEAD', { encoding: 'utf8' })
-      .trim()
-      .split('\n')
-      .filter(Boolean)
-    return { diff, files }
+    try {
+      const diff = execSync('git diff HEAD', { encoding: 'utf8' })
+      const files = execSync('git diff --name-only HEAD', { encoding: 'utf8' })
+        .trim()
+        .split('\n')
+        .filter(Boolean)
+      return { diff, files }
+    } catch {
+      console.error('ERROR: Cannot determine git diff. Ensure this is a git repo with at least one commit.')
+      process.exit(1)
+    }
   }
 }
 

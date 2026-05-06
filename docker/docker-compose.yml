@@ -6,5 +6,9 @@ services:
     image: truvis-devops:latest
     container_name: truvis-devops
     restart: unless-stopped
-    volumes:
-      - ../scripts:/app/scripts:ro
+    healthcheck:
+      test: ["CMD", "bash", "/app/scripts/healthcheck.sh"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

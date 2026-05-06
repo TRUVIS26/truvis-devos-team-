@@ -107,9 +107,11 @@ additionalFoundations:
 
 ---
 
-## Skip-set heuristics (optional)
+## Skip-set heuristics (optional, human-readable only)
 
-Paths Tech Lead should never dispatch a full-team cycle for (use targeted dispatch instead):
+> Note: No agent currently reads `skipSetPaths` automatically. This field is
+> documentation for your team — use it to remind yourself which paths get
+> FE-only dispatch by convention. Tech Lead reads your Module Spec, not this field.
 
 ```yaml
 skipSetPaths:
@@ -119,10 +121,11 @@ skipSetPaths:
 
 ---
 
-## Notes for agents
+## Notes for agents (human-readable only)
 
-> Add any project-specific notes here that all agents should know: naming
-> conventions, off-limits files, third-party integration quirks, etc.
+> Note: No agent currently parses `agentNotes` from this file automatically.
+> Copy important constraints directly into CLAUDE.md's invariants section,
+> or into the Module Spec before dispatching builders.
 
 ```
 agentNotes: |

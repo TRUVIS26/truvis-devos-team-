@@ -29,7 +29,7 @@ export async function withIdempotency<T>(
     if (existing.expiresAt > now) {
       return null
     }
-    await prisma.idempotencyKey.delete({ where: { key } })
+    await prisma.idempotencyKey.deleteMany({ where: { key } })
   }
 
   try {

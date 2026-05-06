@@ -4,7 +4,6 @@ on:
   push:
     branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
 
 jobs:
   lint:
@@ -14,7 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Validate Docker Compose (if present)
+      - name: Validate Docker Compose
         run: |
           if [ -f docker/docker-compose.yml ]; then
             docker compose -f docker/docker-compose.yml config
@@ -24,11 +23,39 @@ jobs:
 
       - name: Check shell scripts
         run: |
-          if compgen -G "scripts/*.sh" > /dev/null 2>&1; then
-            find scripts -name "*.sh" -exec bash -n {} \;
-          else
-            echo "No shell scripts found, skipping."
-          fi
+          find scripts -name "*.sh" -exec bash -n {} \;
+
+  gate-scripts:
+    name: Gate Scripts
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: check:foundations
+        run: npm run check:foundations
+        continue-on-error: true  # template repo lacks prisma/schema.prisma — expected INCOMPLETE
+
+      - name: check:architect-triggers
+        run: npm run check:architect-triggers
+        continue-on-error: true  # triggers may fire on template files — informational in this repo
+
+      - name: lint:migrations
+        run: npm run lint:migrations
+
+      - name: check:env (informational)
+        run: npm run check:env
+        continue-on-error: true  # placeholder values expected in CI without secrets
 
   build:
     name: Build Docker Image

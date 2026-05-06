@@ -33,13 +33,16 @@ export function toPublicExampleModel(model: ExampleModel): PublicExampleModel {
   })
 }
 
-// ---- Delete this file after you ship your first real toPublic<Model> ----
+// ---- Keep this file as a template; copy + rename for each new model ----
 
 function stripForbidden(obj: Record<string, unknown>): Record<string, unknown> {
-  const result = { ...obj }
-  for (const key of Object.keys(result)) {
-    if (FORBIDDEN_FIELD_SET.has(key)) {
-      delete result[key]
+  const result: Record<string, unknown> = {}
+  for (const [key, val] of Object.entries(obj)) {
+    if (FORBIDDEN_FIELD_SET.has(key)) continue
+    if (val !== null && typeof val === 'object' && !Array.isArray(val)) {
+      result[key] = stripForbidden(val as Record<string, unknown>)
+    } else {
+      result[key] = val
     }
   }
   return result
