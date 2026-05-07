@@ -1,0 +1,17 @@
+{
+  "name": "truvis-devos-team",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TRUVIS DevOs Team — multi-subagent workflow primitives and gate scripts",
+  "scripts": {
+    "check:foundations": "tsx scripts/check-foundations.ts",
+    "check:architect-triggers": "tsx scripts/check-architect-triggers.ts",
+    "check:env": "tsx scripts/check-env-readiness.ts",
+    "lint:migrations": "tsx scripts/check-migration-safety.ts"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0"
+  }
+}

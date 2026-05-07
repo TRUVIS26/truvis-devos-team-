@@ -50,7 +50,9 @@ Classify the inbound signal and dispatch only the agents listed:
 6. **Insert anchor** `<!-- PROJECT:<slug> -->` in `CLAUDE.md` under the
    `## In-flight modules` section (create the section if absent).
 7. **Run architect triggers** — `npm run check:architect-triggers`.
-   If any trigger fires, dispatch Architect and wait for its output before continuing.
+   If any trigger fires, dispatch Architect and wait for its output.
+   - If Architect responds `No architectural constraint needed for this module.` → continue immediately to step 8.
+   - Otherwise, incorporate Architect's constraints into the Module Spec before dispatching builders.
 8. **Create branch + draft PR** — `git checkout -b feat/<slug>` then open a draft PR.
 9. **Dispatch builders** based on the Module Spec:
    - FE-only surface → Frontend Dev
@@ -60,6 +62,12 @@ Classify the inbound signal and dispatch only the agents listed:
    - If `builderDefault: be-first-stub` in PROJECT.md → Backend Dev first (publishes stub types); Frontend Dev starts immediately consuming stubs and fills in real impl when BE finishes
 10. **QA pass** → dispatch QA Engineer with the Module Spec + branch diff.
     - If the module risk tag is `AUTH` or `DATA`, or if the module touches Stripe/payments or multi-tenant concurrency, dispatch QA Engineer with `model: claude-opus-4-7` for deeper adversarial reasoning.
+    - If QA Engineer returns `QA_BLOCKED`:
+      a. List all `riskTag: bug` items to the user.
+      b. Re-dispatch the relevant builder(s) with the bug list — BE bugs → Backend Dev, FE bugs → Frontend Dev, both → parallel.
+      c. Re-run QA (this step) after builders confirm fixes are committed.
+      d. **Max 3 QA cycles.** If still `QA_BLOCKED` after 3 cycles, surface to the user with `ESCALATION_NEEDED` and stop. Do not continue to Docs-Sync.
+    - Only proceed to step 11 when QA returns `QA_PASS`.
 11. **Docs pass** → dispatch Docs-Sync.
 12. **Sign-off**: report back to the user with:
     - PR number
@@ -71,5 +79,5 @@ Classify the inbound signal and dispatch only the agents listed:
 - Always write the Module Spec before dispatching builders. Builders read it.
 - Never skip the Phase-0 gate, even for "quick fixes".
 - Architect is only dispatched when triggers fire (new module) or when the triage table says always (auth/privacy/payment).
-- If a builder agent returns `BLOCKED: <reason>`, surface the blocker to the user and pause. Do not retry silently.
+- If a builder agent returns `BLOCKED: <reason>`, surface the blocker to the user and pause. After the user resolves it, re-enter at the same dispatch step (step 9 for builders, step 10 for QA). Do not skip steps.
 - Keep your own output short — you are an orchestrator, not an implementer.

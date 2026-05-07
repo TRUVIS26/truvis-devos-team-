@@ -61,20 +61,31 @@ export async function assertResponseShape(
   expectedShape: Record<string, unknown>,
   label = '',
 ): Promise<void> {
-  const json = await res.json()
+  let json: unknown
+  try {
+    json = await res.json()
+  } catch {
+    const body = await res.text().catch(() => '')
+    throw new Error(
+      `ASSERT_SHAPE${label ? ` [${label}]` : ''}: response is not valid JSON ` +
+      `(status ${res.status}, content-type: ${res.headers.get('content-type')}). ` +
+      `Body preview: ${body.slice(0, 200)}`,
+    )
+  }
+  const jsonRecord = json as Record<string, unknown>
   for (const [key, val] of Object.entries(expectedShape)) {
-    if (!(key in json)) {
+    if (!(key in jsonRecord)) {
       throw new Error(
         `ASSERT_SHAPE${label ? ` [${label}]` : ''}: missing key "${key}" in response`,
       )
     }
-    if (val !== undefined && JSON.stringify(json[key]) !== JSON.stringify(val)) {
+    if (val !== undefined && JSON.stringify(jsonRecord[key]) !== JSON.stringify(val)) {
       throw new Error(
-        `ASSERT_SHAPE${label ? ` [${label}]` : ''}: key "${key}" — expected ${JSON.stringify(val)}, got ${JSON.stringify(json[key])}`,
+        `ASSERT_SHAPE${label ? ` [${label}]` : ''}: key "${key}" — expected ${JSON.stringify(val)}, got ${JSON.stringify(jsonRecord[key])}`,
       )
     }
   }
-  assertNoForbiddenFields(json, label)
+  assertNoForbiddenFields(jsonRecord, label)
 }
 
 /** Print a green PASS line — purely cosmetic. */

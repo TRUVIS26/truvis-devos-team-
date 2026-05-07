@@ -73,7 +73,7 @@ const RULES: LintRule[] = [
     id: 'prefer-concurrent-index',
     severity: 'warning',
     description: 'CREATE INDEX without CONCURRENTLY blocks writes on large tables',
-    test: (sql) => /CREATE\s+INDEX(?!\s+CONCURRENTLY)/i.test(sql),
+    test: (sql) => /CREATE\s+(?:UNIQUE\s+)?INDEX(?!\s+CONCURRENTLY)/i.test(sql),
   },
 ]
 
@@ -114,7 +114,15 @@ function main(): void {
   let totalWarnings = 0
 
   for (const file of files) {
-    const { errors, warnings } = lintFile(path.join(migrationsDir, file))
+    let result: { errors: string[]; warnings: string[] }
+    try {
+      result = lintFile(path.join(migrationsDir, file))
+    } catch (err) {
+      console.error(`  ERROR   [unreadable] ${file}: ${(err as Error).message}`)
+      totalErrors++
+      continue
+    }
+    const { errors, warnings } = result
     if (errors.length + warnings.length > 0) {
       console.log(`\n${file}:`)
       for (const e of errors) console.error(`  ERROR   ${e}`)

@@ -14,7 +14,6 @@
 
 import * as fs from 'node:fs'
 import * as path from 'node:path'
-import * as dotenv from 'dotenv'
 
 const PLACEHOLDER_PATTERNS = [
   /^https?:\/\/your-/i,
@@ -33,6 +32,20 @@ function isPlaceholder(value: string): boolean {
   return PLACEHOLDER_PATTERNS.some((re) => re.test(value.trim()))
 }
 
+function loadEnvFile(envPath: string): void {
+  if (!fs.existsSync(envPath)) return
+  const content = fs.readFileSync(envPath, 'utf8')
+  for (const line of content.split(/\r?\n/)) {
+    const trimmed = line.trim()
+    if (!trimmed || trimmed.startsWith('#')) continue
+    const eqIdx = trimmed.indexOf('=')
+    if (eqIdx === -1) continue
+    const key = trimmed.slice(0, eqIdx)
+    const val = trimmed.slice(eqIdx + 1).replace(/^["']|["']$/g, '')
+    if (!(key in process.env)) process.env[key] = val
+  }
+}
+
 function main(): void {
   const examplePath = path.join(process.cwd(), '.env.example')
   if (!fs.existsSync(examplePath)) {
@@ -40,12 +53,12 @@ function main(): void {
     process.exit(1)
   }
 
-  dotenv.config({ path: path.join(process.cwd(), '.env') })
+  loadEnvFile(path.join(process.cwd(), '.env'))
 
   const exampleContent = fs.readFileSync(examplePath, 'utf8')
   const required = exampleContent
-    .split('\n')
-    .filter((l) => /^[A-Z_]+=/.test(l.trim()))
+    .split(/\r?\n/)
+    .filter((l) => /^[A-Za-z_][A-Za-z0-9_]*=/.test(l.trim()))
     .map((l) => l.split('=')[0].trim())
 
   const missing: string[] = []

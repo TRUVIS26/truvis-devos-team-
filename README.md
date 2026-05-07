@@ -36,7 +36,7 @@ Next.js 16+ App Router · React 19 · TypeScript 5 strict · Prisma 7 + Postgres
 2. Read [`INSTALL.md`](./INSTALL.md) — full retrofit recipe (≈10 minutes per project).
 3. In your target project, fill in `PROJECT.md` from the template and populate `lib/public/constants.ts` with your project's internal-only field names.
 4. Run `npm run check:foundations` in the target project. If it returns `OK`, you're ready.
-5. In Claude Code (or claude.ai/code in the target project), type `/develop-next-module` — Tech Lead asks the user to confirm the next module pick and runs the 10-step sequence end-to-end.
+5. In Claude Code (or claude.ai/code in the target project), type `/develop-next-module` — Tech Lead asks the user to confirm the next module pick and runs the 12-step sequence end-to-end.
 
 ## How the team works
 
