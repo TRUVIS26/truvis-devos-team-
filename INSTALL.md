@@ -16,7 +16,7 @@ If your project deviates from this stack, the lib primitives and scripts may nee
 
 ## Step 1 — Copy the team folders into your target project
 
-From a clone of `truvis25/truvis-devos-team-` and the target-project root:
+From a clone of `TRUVIS26/truvis-devos-team-` and the target-project root:
 
 ```bash
 TEAM=/path/to/truvis-devos-team-          # this repo (note trailing hyphen)
@@ -165,7 +165,7 @@ If Tech Lead instead asks "I don't see a launch checklist — point me at one?",
 
 ## Optional — sync upstream improvements
 
-When the team SOP improves in `truvis25/truvis-devos-team-` (a new triage rule, a tighter trigger, a refactored helper), pull the changes manually:
+When the team SOP improves in `TRUVIS26/truvis-devos-team-` (a new triage rule, a tighter trigger, a refactored helper), pull the changes manually:
 
 ```bash
 cd $TEAM && git pull

@@ -31,7 +31,7 @@ Next.js 16+ App Router · React 19 · TypeScript 5 strict · Prisma 7 + Postgres
 
 1. Clone this repo locally:
    ```bash
-   git clone git@github.com:truvis25/truvis-devos-team-.git
+   git clone git@github.com:TRUVIS26/truvis-devos-team-.git
    ```
 2. Read [`INSTALL.md`](./INSTALL.md) — full retrofit recipe (≈10 minutes per project).
 3. In your target project, fill in `PROJECT.md` from the template and populate `lib/public/constants.ts` with your project's internal-only field names.
@@ -74,4 +74,4 @@ Blanket-dispatching every agent on every cycle was the original mistake. The sma
 
 ## Repo updates
 
-When you discover an improvement to the playbook in your downstream project (a new triage rule, a missing trigger, a tighter regression script), open a PR back to `truvis25/truvis-devos-team-`. The team gets smarter with every cycle.
+When you discover an improvement to the playbook in your downstream project (a new triage rule, a missing trigger, a tighter regression script), open a PR back to `TRUVIS26/truvis-devos-team-`. The team gets smarter with every cycle.
